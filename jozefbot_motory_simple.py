@@ -2,27 +2,36 @@ from machine import Pin
 import utime
 import time
 
+#Pinout setup
+#on board led
 led = Pin(25, Pin.OUT)
 
-echoL = Pin(15, Pin.IN)
-triggerL = Pin(14, Pin.OUT)
-echoM = Pin(5, Pin.IN)
-triggerM = Pin(4, Pin.OUT)
-echoR = Pin(3, Pin.IN)
-triggerR = Pin(2, Pin.OUT)
+#ultrasonic pinout
+echoL = 15
+triggerL = 14
+echoM = 5
+triggerM = 4
+echoR = 3
+triggerR = 2
 
+#line sensor pinout
+#from left to right(forward orientation)
 ir1 = Pin(13, Pin.IN)
 ir2 = Pin(12, Pin.IN)
 ir3 = Pin(11, Pin.IN)
 ir4 = Pin(10, Pin.IN)
 ir5 = Pin(9, Pin.IN)
 
+#engine pinout high low
 motorLB = Pin(18, Pin.OUT)
 motorLF = Pin(19, Pin.OUT)
 motorRB = Pin(20, Pin.OUT)
 motorRF = Pin(21, Pin.OUT)
 
-def ultra():
+#ultrasound sensor distance measurment
+def ultra(echo_input_pin, trigger_input_pin):
+   echo = Pin(echo_input_pin, Pin.IN)
+   trigger = Pin(trigger_input_pin, Pin.OUT)
    trigger.low()
    utime.sleep_us(2)
    trigger.high()
@@ -34,17 +43,11 @@ def ultra():
        signalon = utime.ticks_us()
    timepassed = signalon - signaloff
    distance = (timepassed * 0.0343) / 2
-   print("The distance from object is ",distance,"cm")
-   
-#while True:
-   #ultra()
-  # utime.sleep(1)
-   
+   return distance
+
 
 while True:
-    
-    #print(str(ir1.value()) + str(ir2.value()) + str(ir3.value()) + str(ir4.value()) + str(ir5.value()) )
-    #utime.sleep_ms(10)
+   
     motorLF.high()
     motorRF.high()
     motorLB.low()
