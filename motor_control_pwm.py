@@ -1,3 +1,5 @@
+from machine import PWM, Pin
+
 class Motor:
 
     def __init__(self, pin_forward, pin_backward):
